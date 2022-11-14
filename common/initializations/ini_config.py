@@ -1,5 +1,7 @@
 # _*_ coding:UTF-8
 
+import configparser
+
 
 class Configure(object):
 
