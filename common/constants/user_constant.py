@@ -1,0 +1,5 @@
+import re
+
+# 用户每页数据量
+DEFAULT_USER_PER_PAGE_MIN = 10
+DEFAULT_USER_PER_PAGE_MAX = 100
