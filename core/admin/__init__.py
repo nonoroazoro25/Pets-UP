@@ -40,6 +40,12 @@ def create_app(config_name):
     from core.admin.api.user import user_bp
     m_app.register_blueprint(user_bp)
 
+    with m_app.app_context():
+        try:
+            db.create_all()
+        except Exception as e:
+            print("some error happen %s ", e)
+
     m_app.app_context().push()
     ApiDoc(m_app)
 

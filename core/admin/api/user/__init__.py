@@ -6,3 +6,5 @@ user_bp = Blueprint('user', __name__)
 user_api = Api(user_bp)
 
 user_api.add_resource(user.UserResource, '/api/user/list', endpoint='UserList')
+
+user_api.add_resource(user.UserResource, '/api/user/create', endpoint='UserListCreate')

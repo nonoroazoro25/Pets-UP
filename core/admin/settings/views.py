@@ -1,4 +1,4 @@
-import os
+# -*- coding: UTF-8 -*-
 
 
 class Config(object):
@@ -16,7 +16,7 @@ class Config(object):
     JWT_REFRESH_DAYS = 14
 
     # mysql
-    SQLALCHEMY_DATABASE_URI = " "
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@127.0.0.1:3306/flask_pets_up?charset=utf8mb4'
 
 
 # 开发环境配置信息

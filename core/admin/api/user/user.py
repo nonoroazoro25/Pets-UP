@@ -57,3 +57,39 @@ class UserResource(Resource):
         response_data['size'] = page_count
         response_data['total'] = paginate.total
         return response_to_api(code=200, data=response_data)
+
+    def post(self):
+        """
+        创建用户
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('account', required=True, location='json')
+        json_parser.add_argument('passwd', required=True, location='json')
+        json_parser.add_argument('email', required=True, location='json')
+        args = json_parser.parse_args()
+        account = args.account
+        passwd = args.passwd
+        email = args.email
+
+        user = User()
+        user.account = account
+        user.password = passwd
+        user.email = email
+        response_data = {}
+        try:
+            db.session.add(user)
+            db.session.commit()
+            response_data['UserId'] = user.id
+        except Exception as e:
+            db.session.rollback()
+        return response_to_api(code=200, data=response_data)
+
+
+
+
+    def put(self):
+        """
+        更新用户信息
+        :return:
+        """
