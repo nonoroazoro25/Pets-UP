@@ -42,3 +42,8 @@ def create_app(config_name):
 
     m_app.app_context().push()
     ApiDoc(m_app)
+
+    return m_app
+
+
+g_app = create_app("product")

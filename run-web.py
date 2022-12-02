@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
-
-def main():
-    pass
-
+from gevent import pywsgi
+from core.admin import g_app
 
 if __name__ == '__main__':
-    main()
+    server = pywsgi.WSGIServer(("0.0.0.0", 2020), g_app)
+    server.serve_forever()

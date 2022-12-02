@@ -11,7 +11,7 @@ class Config(object):
     SQLALCHEMY_ECHO = True
 
     # JWT
-    JWT_SECRET = 'TPmi4aLWRbyVq8zu9v82dWYW17/z+UvRnYTt4P6fAXA' + get_server_version()
+    JWT_SECRET = 'TPmi4aLWRbyVq8zu9v82dWYW17/z+UvRnYTt4P6fAXA'
     JWT_EXPIRY_HOURS = 1
     JWT_REFRESH_DAYS = 14
 
