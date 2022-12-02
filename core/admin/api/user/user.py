@@ -85,9 +85,6 @@ class UserResource(Resource):
             db.session.rollback()
         return response_to_api(code=200, data=response_data)
 
-
-
-
     def put(self):
         """
         更新用户信息
