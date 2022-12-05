@@ -52,6 +52,10 @@ class UserResource(Resource):
         currentPage = paginate.page
         items = paginate.items
 
+        # get user info
+        for user_info in items:
+            response_data['users'].append(user_info.to_basic_dict())
+
         response_data['current'] = currentPage
         response_data['pages'] = totalPages
         response_data['size'] = page_count

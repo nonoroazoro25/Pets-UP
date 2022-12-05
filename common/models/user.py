@@ -10,3 +10,13 @@ class User(BaseModel):
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False)
     status = db.Column(db.Boolean, nullable=False, default=True)
+
+    def to_basic_dict(self):
+        resp_dict = {
+            "id": self.id,
+            "account": self.account,
+            "password": self.password,
+            "email": self.email,
+            "status": self.status
+        }
+        return resp_dict

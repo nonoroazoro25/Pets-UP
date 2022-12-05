@@ -40,6 +40,11 @@ def create_app(config_name):
     from core.admin.api.user import user_bp
     m_app.register_blueprint(user_bp)
 
+    from core.admin.api.pets import pets_bp
+    m_app.register_blueprint(pets_bp)
+
+    # from core.admin.api.recipe import
+
     with m_app.app_context():
         try:
             db.create_all()
