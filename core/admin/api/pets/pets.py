@@ -16,6 +16,7 @@ class PetsResource(Resource):
         宠物列表
         :return:
         """
+        print('pets list')
         qs_parser = RequestParser()
         qs_parser.add_argument('name', required=False, location='args')
         qs_parser.add_argument('type', required=False, location='args')
