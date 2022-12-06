@@ -57,6 +57,10 @@ class PetsRecordResource(Resource):
         return response_to_api(code=200, data=response_data)
 
     def post(self):
+        """
+        创建记录
+        :return:
+        """
         json_parser = RequestParser()
         json_parser.add_argument('pet_id', required=True, location='json')
         json_parser.add_argument('title', required=False, location='json')
