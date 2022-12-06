@@ -8,13 +8,10 @@ from common.constants import user_constant
 
 
 class MaterialResource(Resource):
-    """
-
-    """
 
     def get(self):
         qs_parser = RequestParser()
-        qs_parser.add_argument('name', required=True, location='args')
+        qs_parser.add_argument('name', required=False, location='args')
         qs_parser.add_argument('nutrient_content', required=False, location='args')
         qs_parser.add_argument('matchable', required=False, location='args')
         qs_parser.add_argument('order', type=inputs.positive, required=False, location='args')
@@ -52,5 +49,32 @@ class MaterialResource(Resource):
         response_data['pages'] = totalPages
         response_data['size'] = page_count
         response_data['total'] = paginate.total
+        return response_to_api(code=200, data=response_data)
+
+    def post(self):
+        """
+        创建原料
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('name', required=True, location='json')
+        json_parser.add_argument('nutrient_content', required=False, location='json')
+        json_parser.add_argument('matchable', required=False, location='json')
+        args = json_parser.parse_args()
+        name = args.name
+        nutrient_content = args.nutrient_content
+        matchable = args.matchable
+
+        material = RawMaterial()
+        material.name = name
+        material.nutrient_content = nutrient_content
+        material.matchable = matchable
+        response_data = {}
+        try:
+            db.session.add(material)
+            db.session.commit()
+            response_data['MaterialId'] = material.id
+        except Exception as e:
+            db.session.rollback()
         return response_to_api(code=200, data=response_data)
 

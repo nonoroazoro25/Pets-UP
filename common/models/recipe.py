@@ -28,7 +28,7 @@ class RawMaterial(BaseModel):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(256))
-    nutrient_content = db.Column(db.String)  # 营养成分表
+    nutrient_content = db.Column(db.String(256))  # 营养成分表
     matchable = db.Column(db.String(256))
 
     def to_basic_dict(self):

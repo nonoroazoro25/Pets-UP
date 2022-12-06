@@ -14,10 +14,7 @@ class RecipeResource(Resource):
 
     def get(self):
         qs_parser = RequestParser()
-        qs_parser.add_argument('name', required=True, location='args')
-        qs_parser.add_argument('weight', required=False, location='args')
-        qs_parser.add_argument('cook_time', type=inputs.positive, required=False, location='args')
-        qs_parser.add_argument('remark', type=inputs.positive, required=False, location='args')
+        qs_parser.add_argument('name', required=False, location='args')
         qs_parser.add_argument('order', type=inputs.positive, required=False, location='args')
         qs_parser.add_argument('pageNum', type=inputs.positive, required=False, location='args')
         qs_parser.add_argument('pageSize', required=False,
@@ -54,4 +51,36 @@ class RecipeResource(Resource):
         response_data['size'] = page_count
         response_data['total'] = paginate.total
         return response_to_api(code=200, data=response_data)
+
+    def post(self):
+        """
+        创建食谱
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('name', required=True, location='json')
+        json_parser.add_argument('weight', required=False, location='json')
+        json_parser.add_argument('cook_time', required=False, location='json')
+        json_parser.add_argument('remark', required=False, location='json')
+        args = json_parser.parse_args()
+        name = args.name
+        weight = args.weight
+        cook_time = args.cook_time
+        remark = args.remark
+
+        recipe = Recipe()
+        recipe.name = name
+        recipe.weight = weight
+        recipe.cook_time = cook_time
+        recipe.remark = remark
+        response_data = {}
+        try:
+            db.session.add(recipe)
+            db.session.commit()
+            response_data['RecipeId'] = recipe.id
+        except Exception as e:
+            db.session.rollback()
+        return response_to_api(code=200, data=response_data)
+
+
 

@@ -43,6 +43,12 @@ def create_app(config_name):
     from core.admin.api.pets import pets_bp
     m_app.register_blueprint(pets_bp)
 
+    from core.admin.api.recipe import recipe_bp
+    m_app.register_blueprint(recipe_bp)
+
+    from core.admin.api.material import material_bp
+    m_app.register_blueprint(material_bp)
+
     # from core.admin.api.recipe import
 
     with m_app.app_context():
