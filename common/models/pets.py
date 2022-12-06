@@ -29,3 +29,14 @@ class PetRecord(BaseModel):
     detail = db.Column(db.String(256))
     weight = db.Column(db.Float)
     tag = db.Column(db.String(256))
+
+    def to_basic_dict(self):
+        resp_data = {
+            "id": self.id,
+            "pet_id": self.pet_id,
+            "title": self.title,
+            "detail": self.detail,
+            "weight": self.weight,
+            "tag": self.tag
+        }
+        return resp_data

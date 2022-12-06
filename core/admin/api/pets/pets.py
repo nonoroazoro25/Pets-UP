@@ -82,3 +82,6 @@ class PetsResource(Resource):
             db.session.rollback()
 
         return response_to_api(code=200, data=response_data)
+
+
+

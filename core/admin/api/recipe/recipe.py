@@ -80,6 +80,7 @@ class RecipeResource(Resource):
             response_data['RecipeId'] = recipe.id
         except Exception as e:
             db.session.rollback()
+            current_app.logger.error(e)
         return response_to_api(code=200, data=response_data)
 
 
