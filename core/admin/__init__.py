@@ -49,8 +49,6 @@ def create_app(config_name):
     from core.admin.api.material import material_bp
     m_app.register_blueprint(material_bp)
 
-    # from core.admin.api.recipe import
-
     with m_app.app_context():
         try:
             db.create_all()
