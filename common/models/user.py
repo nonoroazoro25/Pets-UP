@@ -10,6 +10,7 @@ class User(BaseModel):
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False)
     status = db.Column(db.Boolean, nullable=False, default=True)
+    pet_ids = db.Column(db.String, nullable=False)
 
     def to_basic_dict(self):
         resp_dict = {
