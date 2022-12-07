@@ -37,6 +37,9 @@ def create_app(config_name):
     CORS(m_app, supports_credentials=True, resource=r'/*')
 
     # 注册蓝图
+    from core.admin.api.login import login_bp
+    m_app.register_blueprint(login_bp)
+
     from core.admin.api.user import user_bp
     m_app.register_blueprint(user_bp)
 
