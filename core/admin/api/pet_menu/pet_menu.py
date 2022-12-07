@@ -7,5 +7,15 @@ from common.utils.response_util import response_to_api
 
 class MenuResource(Resource):
     def get(self):
-        print('get menu')
+        """
+        get menu
+        :return:
+        """
+        pass
+
+    def post(self):
+        """
+        create menu
+        :return:
+        """
         pass
