@@ -1,7 +1,7 @@
-## pets-up
+# pets-up
 基于flask，记录宠物的成长
 
-## 项目框架
+# 项目框架
 common -    constants   通用常量
             <br>
             dao         数据库查询
