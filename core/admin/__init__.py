@@ -40,6 +40,9 @@ def create_app(config_name):
     from core.admin.api.login import login_bp
     m_app.register_blueprint(login_bp)
 
+    from core.admin.api.pet_menu import menu_bp
+    m_app.register_blueprint(menu_bp)
+
     from core.admin.api.user import user_bp
     m_app.register_blueprint(user_bp)
 

@@ -94,3 +94,11 @@ class UserResource(Resource):
         更新用户信息
         :return:
         """
+
+
+class UserInfoResource(Resource):
+    def get(self):
+        resp_data = {}
+        # user = g.user_id
+
+        return response_to_api(code=0, data=resp_data)
