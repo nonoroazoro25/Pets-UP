@@ -13,6 +13,7 @@ def get_user_all():
         raise DatabaseError
     return info
 
+
 def get_user_by_user_id(user_id):
     try:
         info = User.query.filter_by(id=user_id).first()
@@ -43,4 +44,3 @@ def delete_user_by_user_id(user_id):
         db.session.rollback()
         raise DatabaseError
     return True
-
