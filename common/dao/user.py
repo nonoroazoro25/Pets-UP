@@ -43,3 +43,7 @@ def delete_user_by_user_id(user_id):
         db.session.rollback()
         raise DatabaseError
     return True
+
+
+def test_user():
+    pass
