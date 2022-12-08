@@ -12,3 +12,35 @@ def get_pet_all():
         db.session.rollback()
         raise DatabaseError
     return info
+
+
+def get_pet_by_user_id(user_id):
+    try:
+        info = Pet.query.filter_by(user_id=user_id).first()
+    except Exception as e:
+        current_app.logger.error(e)
+        db.session.rollback()
+        raise DatabaseError
+    return info
+
+
+def update_pet_name_by_pet_id(pet_id, update_dict):
+    try:
+        Pet.query.filter_by(id=pet_id).update(update_dict)
+        db.session.commit()
+    except Exception as e:
+        current_app.logger.error(e)
+        db.session.rollback()
+        return False
+    return True
+
+
+def delete_pet_by_pet_id(pet_id):
+    try:
+        Pet.query.filter_by(id=pet_id).delete()
+        db.session.commit()
+    except Exception as e:
+        current_app.logger.error(e)
+        db.session.rollback()
+        raise DatabaseError
+    return True
