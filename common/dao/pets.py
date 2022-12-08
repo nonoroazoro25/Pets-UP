@@ -4,7 +4,7 @@ from common.models.pets import Pet
 from common.errors.base_exception import DatabaseError
 
 
-def get_user_all():
+def get_pet_all():
     try:
         info = Pet.query.all()
     except Exception as e:
