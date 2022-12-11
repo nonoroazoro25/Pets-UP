@@ -6,4 +6,7 @@ manager = Manager(g_app)
 manager.add_command('apidoc', GenerateApiDoc())
 
 if __name__ == "__main__":
+    """
+    文档生成
+    """
     manager.run()
