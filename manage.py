@@ -7,6 +7,6 @@ manager.add_command('apidoc', GenerateApiDoc())
 
 if __name__ == "__main__":
     """
-    文档生成
+    restful接口风格利用apidoc生成api文档
     """
     manager.run()
