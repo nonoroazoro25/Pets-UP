@@ -24,6 +24,16 @@ def get_user_by_user_id(user_id):
     return info
 
 
+def get_user_by_user_name(user):
+    try:
+        info = User.query.filter_by(account=user).first()
+    except Exception as e:
+        current_app.logger.error(e)
+        db.session.rollback()
+        raise DatabaseError
+    return info
+
+
 def update_user_by_user_id(user_id, update_dict):
     try:
         User.query.filter_by(id=user_id).update(update_dict)
