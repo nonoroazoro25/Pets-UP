@@ -9,6 +9,7 @@ class Pet(BaseModel):
     user_id = db.Column(db.Integer)
     name = db.Column(db.String(256))
     type = db.Column(db.String(256))
+    photo = db.Column(db.BINARY)
 
     def to_basic_dict(self):
         resp_dic = {

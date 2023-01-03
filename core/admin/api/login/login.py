@@ -5,7 +5,6 @@ from flask_restful.reqparse import RequestParser
 from flask import current_app, g
 from common.utils.response_util import response_to_api
 from common.dao.user import get_user_by_user_name
-from common.models.user import User
 from common.utils.jwt_util import generate_jwt
 
 
@@ -74,9 +73,9 @@ class LoginResource(Resource):
         response_data = {}
 
         database_user = get_user_by_user_name(account)
-        user_id = database_user.id
         if not database_user:
             return response_to_api(code=601, data=response_data)
+        user_id = database_user.id
 
         if password != database_user.password:
             return response_to_api(code=602, data=response_data)
