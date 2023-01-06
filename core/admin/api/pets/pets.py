@@ -62,15 +62,19 @@ class PetsResource(Resource):
         创建宠物记录
         """
         json_parser = RequestParser()
+        json_parser.add_argument('user_id', required=True, location='json')
         json_parser.add_argument('name', required=True, location='json')
         json_parser.add_argument('type', required=True, location='json')
+        json_parser.add_argument('photo', required=False, location='json')
         args = json_parser.parse_args()
         name = args.name
         type = args.type
+        userId = args.user_id
 
         pet = Pet()
         pet.name = name
         pet.type = type
+        pet.user_id = userId
 
         response_data = {}
 
