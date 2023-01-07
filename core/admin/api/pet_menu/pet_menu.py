@@ -11,6 +11,7 @@ class MenuResource(Resource):
     def get(self):
         """
         get menu
+        暂不动态获取
         :return:
         """
         qs_parser = RequestParser()

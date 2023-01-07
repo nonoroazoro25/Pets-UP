@@ -8,6 +8,7 @@ from common.constants import user_constant
 
 
 class MaterialResource(Resource):
+    """食材"""
 
     def get(self):
         qs_parser = RequestParser()

@@ -19,6 +19,8 @@ def create_app(config_name):
     config = config_dict.get(config_name)
     # 创建m_app对象
     m_app = create_flask_app(config)
+    # ???
+    m_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     # 定时任务
     # m_app.config.from_object()
 
