@@ -56,11 +56,14 @@ class DewormResource(Resource):
         :return:
         """
         json_parser = RequestParser()
+        json_parser.add_argument('dose', required=False, location='json')
         json_parser.add_argument('remark', required=True, location='json')
         args = json_parser.parse_args()
         remark = args.remark
+        dose = args.dose
 
         deworm = Deworm()
+        deworm.dose = dose
         deworm.remark = remark
         response_data = {}
         try:

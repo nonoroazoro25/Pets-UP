@@ -21,10 +21,13 @@ class Deworm(BaseModel):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     remark = db.Column(db.String(256))
+    dose = db.Column(db.String(256))
 
     def to_basic_dict(self):
         resp_data = {
             "id": self.id,
             "remark": self.remark,
+            "dose": self.dose,
+            "create_time": self.create_time.strftime("%Y-%m-%d %H:%M:%S"),
         }
         return resp_data
