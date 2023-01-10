@@ -57,6 +57,12 @@ def create_app(config_name):
     from core.admin.api.material import material_bp
     m_app.register_blueprint(material_bp)
 
+    from core.admin.api.article import article_bp
+    m_app.register_blueprint(article_bp)
+
+    from core.admin.api.tools import tools_bp
+    m_app.register_blueprint(tools_bp)
+
     with m_app.app_context():
         try:
             db.create_all()
