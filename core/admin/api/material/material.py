@@ -1,6 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.recipe import RawMaterial
+from common.dao.material import delete_material_by_args
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -78,4 +79,17 @@ class MaterialResource(Resource):
         except Exception as e:
             db.session.rollback()
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('materialId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        materialId = args.materialId
+        result = delete_material_by_args(materialId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
 

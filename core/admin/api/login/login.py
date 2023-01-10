@@ -89,4 +89,13 @@ class LoginResource(Resource):
         pass
 
 
+class LogoutResource(Resource):
+    """
+    注销
+    """
+
+    def post(self):
+        pass
+
+
 

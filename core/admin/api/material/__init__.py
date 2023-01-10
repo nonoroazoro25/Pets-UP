@@ -7,3 +7,4 @@ material_api = Api(material_bp)
 
 material_api.add_resource(material.MaterialResource, '/api/material/list', endpoint='MaterialList')
 material_api.add_resource(material.MaterialResource, '/api/material/create', endpoint='MaterialCreate')
+material_api.add_resource(material.MaterialResource, '/api/material/delete', endpoint='MaterialDelete')
