@@ -2,6 +2,7 @@ from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.constants import user_constant
 from common.models.pets import Pet
+from common.dao.pets import get_pet_by_user_id, delete_pet_by_pet_id, update_pet_name_by_pet_id
 from common.utils.response_util import response_to_api
 from common.models import db
 
@@ -86,6 +87,50 @@ class PetsResource(Resource):
             db.session.rollback()
 
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('petId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        petId = args.petId
+        result = delete_pet_by_pet_id(petId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+        修改
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('pet_id', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('user_id', required=False, location='json')
+        json_parser.add_argument('name', required=False, location='json')
+        json_parser.add_argument('type', required=False, location='json')
+        args = json_parser.parse_args()
+
+        pet_id = args.pet_id
+        user_id = args.user_id
+        name = args.name
+        type = args.type
+
+        pet = get_pet_by_user_id(pet_id)
+        if pet is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if user_id != None:
+            update_dict["user_id"] = user_id
+        if name != None:
+            update_dict["name"] = name
+        if type != None:
+            update_dict["type"] = type
+        update_pet_name_by_pet_id(pet_id, update_dict)
+        return response_to_api(code=200)
 
 
 

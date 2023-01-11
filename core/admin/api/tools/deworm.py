@@ -1,6 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.tools import Deworm
+from common.dao.tools import get_deworm_by_id, delete_deworm_by_args, update_deworm_info_by_id
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -73,4 +74,44 @@ class DewormResource(Resource):
         except Exception as e:
             db.session.rollback()
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('dewormId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        dewormId = args.dewormId
+        result = delete_deworm_by_args(dewormId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+        修改
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('dewormId', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('remark', required=False, location='json')
+        json_parser.add_argument('dose', required=False, location='json')
+        args = json_parser.parse_args()
+
+        dewormId = args.dewormId
+        remark = args.remark
+        dose = args.dose
+
+        deworm = get_deworm_by_id(dewormId)
+        if deworm is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if remark != None:
+            update_dict["remark"] = remark
+        if dose != None:
+            update_dict["dose"] = dose
+        update_deworm_info_by_id(dewormId, update_dict)
+        return response_to_api(code=200)
 

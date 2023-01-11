@@ -7,3 +7,5 @@ article_api = Api(article_bp)
 
 article_api.add_resource(article.Article, '/api/article/list', endpoint='ArticleListResource')
 article_api.add_resource(article.Article, '/api/article/create', endpoint='ArticleCreateResource')
+article_api.add_resource(article.Article, '/api/article/delete', endpoint='ArticleDeleteResource')
+article_api.add_resource(article.Article, '/api/article/update', endpoint='ArticleUpdateResource')

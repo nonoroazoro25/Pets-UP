@@ -1,6 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.pets_article import PetsArticle
+from common.dao.article import delete_article_by_args, update_article_info_by_id, get_article_by_id
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -85,4 +86,52 @@ class Article(Resource):
         except Exception as e:
             db.session.rollback()
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('articleId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        articleId = args.articleId
+        result = delete_article_by_args(articleId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+               修改
+               :return:
+               """
+        json_parser = RequestParser()
+        json_parser.add_argument('article_id', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('user_id', type=inputs.positive, required=False, location='json')
+        json_parser.add_argument('pet_id', required=False, location='json')
+        json_parser.add_argument('title', required=False, location='json')
+        json_parser.add_argument('content', required=False, location='json')
+        args = json_parser.parse_args()
+
+        article_id = args.article_id
+        user_id = args.user_id
+        pet_id = args.pet_id
+        title = args.title
+        content = args.content
+
+        article = get_article_by_id(article_id)
+        if article is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if user_id != None:
+            update_dict["user_id"] = user_id
+        if pet_id != None:
+            update_dict["pet_id"] = pet_id
+        if title != None:
+            update_dict["title"] = title
+        if content != None:
+            update_dict["content"] = content
+        update_article_info_by_id(article_id, update_dict)
+        return response_to_api(code=200)
 

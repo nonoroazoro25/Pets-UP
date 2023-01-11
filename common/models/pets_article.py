@@ -13,6 +13,7 @@ class PetsArticle(BaseModel):
 
     def to_basic_dict(self):
         resp_data = {
+            "id": self.id,
             'title': self.title,
             'content': self.content,
             'user_id': self.user_id,

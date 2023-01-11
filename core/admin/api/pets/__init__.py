@@ -9,6 +9,8 @@ pets_api = Api(pets_bp)
 # 宠物
 pets_api.add_resource(pets.PetsResource, '/api/pets/list', endpoint='PetsList')
 pets_api.add_resource(pets.PetsResource, '/api/pets/create', endpoint='PetsListCreate')
+pets_api.add_resource(pets.PetsResource, '/api/pets/delete', endpoint='PetsListDelete')
+pets_api.add_resource(pets.PetsResource, '/api/pets/update', endpoint='PetsListUpdate')
 
 # 宠物记录
 pets_api.add_resource(pet_record.PetsRecordResource, '/api/pets/record/list', endpoint='PetsRecordList')

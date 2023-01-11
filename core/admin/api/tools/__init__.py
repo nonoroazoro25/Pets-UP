@@ -7,6 +7,10 @@ tools_api = Api(tools_bp)
 
 tools_api.add_resource(tag.TagResource, '/api/tag/list', endpoint='TagListResource')
 tools_api.add_resource(tag.TagResource, '/api/tag/create', endpoint='TagCreateResource')
+tools_api.add_resource(tag.TagResource, '/api/tag/delete', endpoint='TagDeleteResource')
+tools_api.add_resource(tag.TagResource, '/api/tag/update', endpoint='TagUpdateResource')
 
 tools_api.add_resource(deworm.DewormResource, '/api/deworm/list', endpoint='DewormListResource')
 tools_api.add_resource(deworm.DewormResource, '/api/deworm/create', endpoint='DewormCreateResource')
+tools_api.add_resource(deworm.DewormResource, '/api/deworm/delete', endpoint='DewormDeleteResource')
+tools_api.add_resource(deworm.DewormResource, '/api/deworm/update', endpoint='DewormUpdateResource')

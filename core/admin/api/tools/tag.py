@@ -1,6 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.tools import Tag
+from common.dao.tools import get_tag_by_id, update_tag_info_by_id, delete_tag_by_args
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -74,4 +75,40 @@ class TagResource(Resource):
         except Exception as e:
             db.session.rollback()
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('tagId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        tagId = args.tagId
+        result = delete_tag_by_args(tagId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+        修改
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('tagId', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('type', required=False, location='json')
+        args = json_parser.parse_args()
+
+        tagId = args.tagId
+        type = args.type
+
+        tag = get_tag_by_id(tagId)
+        if tag is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if type != None:
+            update_dict["type"] = type
+        update_tag_info_by_id(tagId, update_dict)
+        return response_to_api(code=200)
 

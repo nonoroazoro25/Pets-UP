@@ -91,7 +91,7 @@ class LoginResource(Resource):
 
 class LogoutResource(Resource):
     """
-    注销
+    注销账号
     """
 
     def post(self):

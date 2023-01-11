@@ -1,7 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.recipe import RawMaterial
-from common.dao.material import delete_material_by_args
+from common.dao.material import delete_material_by_args, update_material_info_by_id, get_material_by_id
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -91,5 +91,32 @@ class MaterialResource(Resource):
         result = delete_material_by_args(materialId)
         if result is None:
             return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+        修改
+        :return:
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('materialId', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('nutrient_content', required=False, location='json')
+        json_parser.add_argument('matchable', required=False, location='json')
+        args = json_parser.parse_args()
+
+        materialId = args.materialId
+        nutrient_content = args.nutrient_content
+        matchable = args.matchable
+
+        material = get_material_by_id(materialId)
+        if material is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if nutrient_content != None:
+            update_dict["nutrient_content"] = nutrient_content
+        if matchable != None:
+            update_dict["matchable"] = matchable
+        update_material_info_by_id(materialId, update_dict)
         return response_to_api(code=200)
 

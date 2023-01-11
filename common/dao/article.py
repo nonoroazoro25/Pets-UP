@@ -1,12 +1,12 @@
 from flask import current_app
 from common.models import db
-from common.models.recipe import Recipe
+from common.models.pets_article import PetsArticle
 from common.errors.base_exception import DatabaseError
 
 
-def get_recipe_all():
+def get_article_all():
     try:
-        info = Recipe.query.all()
+        info = PetsArticle.query.all()
     except Exception as e:
         current_app.logger.error(e)
         db.session.rollback()
@@ -14,9 +14,9 @@ def get_recipe_all():
     return info
 
 
-def get_recipe_by_id(recipe_id):
+def get_article_by_id(article_id):
     try:
-        info = Recipe.query.get(recipe_id)
+        info = PetsArticle.query.get(article_id)
     except Exception as e:
         current_app.logger.error(e)
         db.session.rollback()
@@ -24,19 +24,19 @@ def get_recipe_by_id(recipe_id):
     return info
 
 
-def delete_recipe_by_args(recipe_id):
-    recipe = get_recipe_by_id(recipe_id)
-    if recipe is None:
+def delete_article_by_args(article_id):
+    material = get_article_by_id(article_id)
+    if material is None:
         return False
     else:
-        db.session.delete(recipe)
+        db.session.delete(material)
         db.session.commit()
     return True
 
 
-def update_recipe_info_by_id(recipe_id, kwargs):
+def update_article_info_by_id(article_id, kwargs):
     try:
-        Recipe.query.filter_by(id=recipe_id).update(kwargs)
+        PetsArticle.query.filter_by(id=article_id).update(kwargs)
         db.session.commit()
     except Exception as e:
         current_app.logger.error(e)

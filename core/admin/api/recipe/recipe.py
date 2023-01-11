@@ -1,6 +1,7 @@
 from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.models.recipe import Recipe
+from common.dao.recipe import get_recipe_by_id, update_recipe_info_by_id, delete_recipe_by_args
 from common.models import db
 from flask import current_app, g
 from common.utils.response_util import response_to_api
@@ -82,6 +83,54 @@ class RecipeResource(Resource):
             db.session.rollback()
             current_app.logger.error(e)
         return response_to_api(code=200, data=response_data)
+
+    def delete(self):
+        """"
+        删除
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('recipeId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        recipeId = args.recipeId
+        result = delete_recipe_by_args(recipeId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
+
+    def put(self):
+        """
+                修改
+                :return:
+                """
+        json_parser = RequestParser()
+        json_parser.add_argument('recipeId', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('name', required=False, location='json')
+        json_parser.add_argument('weight', required=False, location='json')
+        json_parser.add_argument('cook_time', required=False, location='json')
+        json_parser.add_argument('remark', required=False, location='json')
+        args = json_parser.parse_args()
+
+        recipeId = args.recipeId
+        name = args.name
+        weight = args.weight
+        cook_time = args.cook_time
+        remark = args.remark
+
+        recipe = get_recipe_by_id(recipeId)
+        if recipe is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if name != None:
+            update_dict["name"] = name
+        if weight != None:
+            update_dict["weight"] = weight
+        if cook_time != None:
+            update_dict["cook_time"] = cook_time
+        if remark != None:
+            update_dict["remark"] = remark
+        update_recipe_info_by_id(recipeId, update_dict)
+        return response_to_api(code=200)
 
 
 
