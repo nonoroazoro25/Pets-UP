@@ -2,6 +2,7 @@ from flask_restful import Resource, inputs
 from flask_restful.reqparse import RequestParser
 from common.utils.param_verify import verify_int_type
 from common.models.user import User
+from common.dao.user import get_user_by_user_id, update_user_by_user_id, delete_user_by_user_id
 from common.models import db
 from common.constants import user_constant
 from flask import current_app, g
@@ -94,11 +95,51 @@ class UserResource(Resource):
         更新用户信息
         :return:
         """
+        json_parser = RequestParser()
+        json_parser.add_argument('userId', type=inputs.positive, required=True, location='json')
+        json_parser.add_argument('account', required=False, location='json')
+        json_parser.add_argument('password', required=False, location='json')
+        json_parser.add_argument('email', required=False, location='json')
+        json_parser.add_argument('status', required=False, location='json')
+        json_parser.add_argument('pet_ids', required=False, location='json')
+        args = json_parser.parse_args()
+
+        userId = args.userId
+        account = args.account
+        password = args.password
+        email = args.email
+        status = args.status
+        pet_ids = args.pet_ids
+
+        user = get_user_by_user_id(userId)
+        if user is None:
+            return response_to_api(code=4034)
+
+        update_dict = {}
+        if account != None:
+            update_dict["account"] = account
+        if password != None:
+            update_dict["password"] = password
+        if email != None:
+            update_dict["email"] = email
+        if status != None:
+            update_dict["status"] = status
+        if pet_ids != None:
+            update_dict["pet_ids"] = pet_ids
+        update_user_by_user_id(userId, update_dict)
+        return response_to_api(code=200)
+
+    def delete(self):
+        """"
+        删除用户
+        """
+        json_parser = RequestParser()
+        json_parser.add_argument('userId', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+        userId = args.userId
+        result = delete_user_by_user_id(userId)
+        if result is None:
+            return response_to_api(code=4044)
+        return response_to_api(code=200)
 
 
-class UserInfoResource(Resource):
-    def get(self):
-        resp_data = {}
-        # user = g.user_id
-
-        return response_to_api(code=0, data=resp_data)
