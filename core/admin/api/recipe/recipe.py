@@ -99,9 +99,9 @@ class RecipeResource(Resource):
 
     def put(self):
         """
-                修改
-                :return:
-                """
+        修改食谱
+        :return:
+        """
         json_parser = RequestParser()
         json_parser.add_argument('recipeId', type=inputs.positive, required=True, location='json')
         json_parser.add_argument('name', required=False, location='json')
