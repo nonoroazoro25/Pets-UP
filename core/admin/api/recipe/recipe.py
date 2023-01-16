@@ -10,10 +10,14 @@ from common.constants import user_constant
 
 class RecipeResource(Resource):
     """
-
+    食谱
     """
 
     def get(self):
+        """
+        获取食谱列表
+        :return:
+        """
         qs_parser = RequestParser()
         qs_parser.add_argument('name', required=False, location='args')
         qs_parser.add_argument('order', type=inputs.positive, required=False, location='args')
@@ -86,7 +90,7 @@ class RecipeResource(Resource):
 
     def delete(self):
         """"
-        删除
+        删除食谱
         """
         json_parser = RequestParser()
         json_parser.add_argument('recipeId', type=inputs.positive, required=True, location='json')

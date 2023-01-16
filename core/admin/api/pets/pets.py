@@ -9,7 +9,7 @@ from common.models import db
 
 class PetsResource(Resource):
     """
-    宠物
+    宠物（没用）
     """
 
     def get(self):

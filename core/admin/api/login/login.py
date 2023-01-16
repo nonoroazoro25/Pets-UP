@@ -85,9 +85,6 @@ class LoginResource(Resource):
         response_data["refresh_token"] = refresh_token
         return response_to_api(code=0, data=response_data)
 
-    def options(self):
-        pass
-
 
 class LogoutResource(Resource):
     """
