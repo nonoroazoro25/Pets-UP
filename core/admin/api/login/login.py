@@ -6,6 +6,8 @@ from flask import current_app, g
 from common.utils.response_util import response_to_api
 from common.dao.user import get_user_by_user_name
 from common.utils.jwt_util import generate_jwt
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 
 
 class LoginResource(Resource):
@@ -93,6 +95,25 @@ class LogoutResource(Resource):
 
     def post(self):
         pass
+
+
+class GoogleLoginResource(Resource):
+    """google login"""
+
+    def post(self):
+        flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+            'client_secret.json',
+            scopes=['https://www.googleapis.com/auth/userinfo.profile'])
+
+        flow.redirect_uri = 'https://localhost:2020/api/google/login'
+
+        authorization_url, state = flow.authorization_url(
+            access_type='offline',
+            include_granted_scopes='true')
+
+        print(authorization_url)
+        print(state)
+
 
 
 

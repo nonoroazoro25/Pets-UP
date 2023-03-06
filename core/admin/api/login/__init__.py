@@ -6,3 +6,4 @@ login_bp = Blueprint('login', __name__)
 login_api = Api(login_bp)
 
 login_api.add_resource(login.LoginResource, '/api/login', endpoint='LoginResource')
+login_api.add_resource(login.GoogleLoginResource, '/api/google/login', endpoint='GoogleLoginResource')
